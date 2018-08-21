@@ -1,28 +1,23 @@
 import React, { Component } from "react";
 import "./app.css";
-import ReactImage from "./react.png";
+import DelAppBar from './components/header/header';
+import Orders from './components/orders/orders';
+// import LocationSearchInput from "./components/googlemapsapi/searchbar";
+// import MyGeocode from './components/googlemapsapi/geocode'
+import Map from './components/googlemapsapi/map'
+import DrivingTime from './components/googlemapsapi/drivingtime'
 
 export default class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { username: null };
-  }
-
-  componentDidMount() {
-    fetch("/api/getUsername")
-      .then(res => res.json())
-      .then(user => this.setState({ username: user.username }));
-  }
 
   render() {
     return (
       <div>
-        {this.state.username ? (
-          <h1>Hello {this.state.username}</h1>
-        ) : (
-          <h1>Loading.. please wait!</h1>
-        )}
-        <img src={ReactImage} alt="react" />
+        <DelAppBar/>
+        <br/>
+        <Map/>
+        <hr/>
+        <Orders/>
+        <DrivingTime/>
       </div>
     );
   }
