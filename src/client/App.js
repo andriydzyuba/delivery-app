@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import "./app.css";
 import DelAppBar from './components/header/header';
-import Orders from './components/orders/orders';
+import Header from './router';
+// import Orders from './components/orders/orders';
 // import LocationSearchInput from "./components/googlemapsapi/searchbar";
 // import MyGeocode from './components/googlemapsapi/geocode'
-import Map from './components/googlemapsapi/map'
-import DrivingTime from './components/googlemapsapi/drivingtime'
+// import Map from './components/googlemapsapi/map'
+// import DrivingTime from './components/googlemapsapi/drivingtime'
 
 export default class App extends Component {
 
@@ -14,10 +14,7 @@ export default class App extends Component {
       <div>
         <DelAppBar/>
         <br/>
-        <Map/>
-        <hr/>
-        <Orders/>
-        <DrivingTime/>
+        <Header/>
       </div>
     );
   }

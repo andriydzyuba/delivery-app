@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  var FormOrders = sequelize.define('FormOrders', {
+  var Orders = sequelize.define('Orders', {
     id: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -35,13 +35,16 @@ module.exports = (sequelize, DataTypes) => {
     date_estimated: {
       type: DataTypes.DATE
     },
+    track_code: {
+      type: DataTypes.STRING
+    },
     status: {
       type: DataTypes.ENUM,
       values: ['in stock', 'in the way', 'delivered']
     }
   });
-  FormOrders.associate = function(models) {
-    models.FormOrders.hasOne(models.Cars);
+  Orders.associate = function(models) {
+    models.Orders.hasOne(models.Cars);
   };
-  return FormOrders;
+  return Orders;
 };

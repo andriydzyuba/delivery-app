@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('FormOrders', {
+    return queryInterface.createTable('Orders', {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
@@ -36,8 +36,11 @@ module.exports = {
       date_estimated: {
         type: Sequelize.DATE
       },
+      track_code: {
+        type: Sequelize.STRING
+      },
       status: {
-        type: DataTypes.ENUM,
+        type: Sequelize.ENUM,
         values: ['in stock', 'in the way', 'delivered']
       },
       createdAt: {
@@ -51,6 +54,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('FormOrders');
+    return queryInterface.dropTable('Orders');
   }
 };

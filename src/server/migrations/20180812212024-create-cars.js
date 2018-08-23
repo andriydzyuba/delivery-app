@@ -33,7 +33,7 @@ module.exports = {
         onDelete: "CASCADE",
         allowNull: false,
         references: {
-          model: 'FormOrders',
+          model: 'Orders',
           key: 'id'
         }
       }

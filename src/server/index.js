@@ -1,6 +1,7 @@
 const models  = require('./models/index');
 const express = require('express');
 const bodyParser = require("body-parser");
+const randomstring = require("randomstring");
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -13,18 +14,44 @@ models.sequelize.sync().then(function() {
 });
 
 app.get('/api/orders', (req, res) => {
-  models.FormOrders.findAll()
+  models.Orders.findAll()
     .then(function (orders) {
       res.json(orders);
     });
 });
 
+// app.get('/api/check/:track_code', (req, res) => {
+//   models.Orders.findOne({where: {track_code: req.orders.track_code}})
+//     .then(function (orders) {
+//       res.json(orders);
+//     });
+// });
+
+app.get('/api/check/:track_code', (req, res) => {
+  models.Orders.findOne({
+    where: {
+      track_code: req.params.track_code
+    }
+  }).then(function(order) {
+    res.json(order);
+  });
+});
+
 app.post('/api/orders', function(req, res) {
-  models.FormOrders.create({
+  models.Orders.create({
+    address_from: req.body.address_from,
+    point_from: req.body.point_from,
     address_to: req.body.address_to,
     point_to: req.body.point_to,
-    contacts: req.body.contacts
+    contacts: req.body.contacts,
+    travel_time: req.body.travel_time,
+    status: req.body.status,
+    track_code: randomstring.generate({
+      length: 10,
+      charset: 'alphanumeric',
+      capitalization: 'uppercase'
+    })
   }).then(function() {
-    res.redirect('/api/orders');
+    res.send('/api/orders');
   });
 });

@@ -11,7 +11,7 @@ const styles = {
   },
 };
 
-function DelAppBar(props) {
+function Header(props) {
   const { classes } = props;
   return (
     <div className={classes.root}>
@@ -26,8 +26,8 @@ function DelAppBar(props) {
   );
 }
 
-DelAppBar.propTypes = {
+Header.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(DelAppBar);
+export default withStyles(styles)(Header);

@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   });
   Cars.associate = function(models) {
-    models.Cars.belongsTo(models.FormOrders, {
+    models.Cars.belongsTo(models.Orders, {
       onDelete: "CASCADE",
       foreignKey: {
         allowNull: false
