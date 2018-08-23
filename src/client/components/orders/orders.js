@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './orders.css';
-// import axios from 'axios';
 import api from '../../api';
 import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -71,5 +70,4 @@ class ListComponent extends Component {
   }
 }
 
-// export default ListComponent;
 export default withStyles(styles)(ListComponent);

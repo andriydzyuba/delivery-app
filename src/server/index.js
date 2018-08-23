@@ -20,13 +20,6 @@ app.get('/api/orders', (req, res) => {
     });
 });
 
-// app.get('/api/check/:track_code', (req, res) => {
-//   models.Orders.findOne({where: {track_code: req.orders.track_code}})
-//     .then(function (orders) {
-//       res.json(orders);
-//     });
-// });
-
 app.get('/api/check/:track_code', (req, res) => {
   models.Orders.findOne({
     where: {
@@ -51,7 +44,7 @@ app.post('/api/orders', function(req, res) {
       charset: 'alphanumeric',
       capitalization: 'uppercase'
     })
-  }).then(function() {
-    res.send('/api/orders');
+  }).then(function(order) {
+    res.send(order);
   });
 });

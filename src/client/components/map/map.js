@@ -5,19 +5,36 @@ import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-au
 import Geocode from "react-geocode";
 import { Create } from "../create/create"
 import TextField from "@material-ui/core/TextField";
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
 import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import MenuItem from '@material-ui/core/MenuItem';
+import MenuList from '@material-ui/core/MenuList';
+import { withStyles } from '@material-ui/core/styles';
 
+const styles = theme => ({
+  root: {
+    display: 'flex',
+    marginLeft: '25px',
+  },
+  paper: {
+    width: '100%',
+  },
+  list: {
+    padding: '3px',
+  },
+  item: {
+    padding: '0 10px',
+  } ,
+});
 
 class CreateComponent extends React.PureComponent {
   state = {
     isMarkerShown: false,
-    lat_from: 49.8239611,
-    lng_from: 23.9550712,
+    lat_from: 49.828460,
+    lng_from: 23.993185,
     address_from: 'вулиця Патона, 6, Львів, Львівська область, Україна, 79000',
-    lat_to: 49.828460,
-    lng_to: 23.993185,
+    lat_to: 49.839683,
+    lng_to: 24.029717,
     address_to: '',
     travel_time: 0,
     search: ''
@@ -63,23 +80,6 @@ class CreateComponent extends React.PureComponent {
 
     this.CheckTime(lat, lng);
 
-    // const DirectionsService = new google.maps.DirectionsService();
-    //
-    // DirectionsService.route({
-    //   origin: new google.maps.LatLng(this.state.lat_from, this.state.lng_from),
-    //   destination: new google.maps.LatLng(lat, lng),
-    //   travelMode: google.maps.TravelMode.DRIVING,
-    // }, (result, status) => {
-    //   if (status === google.maps.DirectionsStatus.OK) {
-    //     let point = result.routes[ 0 ].legs[ 0 ];
-    //     this.setState({
-    //       travel_time: point.duration.value,
-    //     });
-    //   } else {
-    //     console.error(`error fetching directions ${result}`);
-    //   }
-    // });
-
     this.setState({
       isMarkerShown: true,
       lat_to: lat,
@@ -98,25 +98,8 @@ class CreateComponent extends React.PureComponent {
     geocodeByAddress(address)
       .then(results => getLatLng(results[0]))
       .then(({ lat, lng }) => {
-
+        console.log(lat, lng);
         this.CheckTime(lat, lng);
-
-        // const DirectionsService = new google.maps.DirectionsService();
-        //
-        // DirectionsService.route({
-        //   origin: new google.maps.LatLng(this.state.lat_from, this.state.lng_from),
-        //   destination: new google.maps.LatLng(lat, lng),
-        //   travelMode: google.maps.TravelMode.DRIVING,
-        // }, (result, status) => {
-        //   if (status === google.maps.DirectionsStatus.OK) {
-        //     let point = result.routes[ 0 ].legs[ 0 ];
-        //     this.setState({
-        //       travel_time: point.duration.value,
-        //     });
-        //   } else {
-        //     console.error(`error fetching directions ${result}`);
-        //   }
-        // });
 
         this.setState({
           isMarkerShown: true,
@@ -130,6 +113,7 @@ class CreateComponent extends React.PureComponent {
   }
 
   render() {
+    const { classes } = this.props;
 
     const MapComponent = compose(
       withProps({
@@ -143,7 +127,7 @@ class CreateComponent extends React.PureComponent {
       withGoogleMap
     )((props) =>
       <GoogleMap
-        defaultZoom={16}
+        defaultZoom={14}
         defaultCenter={{ lat: this.state.lat_to, lng: this.state.lng_to }}
         onClick={this.handleClick}
       >
@@ -166,7 +150,7 @@ class CreateComponent extends React.PureComponent {
             >
               {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
                 <div>
-                  <TextField style={{padding: 24, width: '100%'}}
+                  <TextField style={{padding: '6px 12px 6px 24px', width: '96%'}}
                              placeholder="Search Places ..."
                              margin="normal"
                              {...getInputProps()}
@@ -175,12 +159,13 @@ class CreateComponent extends React.PureComponent {
                     {loading && <div>Loading...</div>}
                     {suggestions.map(suggestion => {
                       return (
-                        <List component="nav"
-                              {...getSuggestionItemProps(suggestion)}>
-                          <ListItem button>
-                            {suggestion.description}
-                          </ListItem>
-                        </List>
+                        <div className={classes.root}>
+                          <Paper className={classes.paper}>
+                            <MenuList className={classes.list} {...getSuggestionItemProps(suggestion)}>
+                              <MenuItem className={classes.item}>{suggestion.description}</MenuItem>
+                            </MenuList>
+                          </Paper>
+                        </div>
                       );
                     })}
                   </div>
@@ -200,4 +185,5 @@ class CreateComponent extends React.PureComponent {
   }
 }
 
-export default CreateComponent
+// export default CreateComponent
+export default withStyles(styles)(CreateComponent);

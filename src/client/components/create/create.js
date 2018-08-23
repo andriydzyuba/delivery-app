@@ -1,20 +1,13 @@
 import React, { Component } from 'react';
-import './create.css';
+import api from '../../api';
 import Button from '@material-ui/core/Button';
 import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
-// import axios from 'axios';
-import api from '../../api';
+import Paper from "@material-ui/core/Paper";
 
 export class Create extends Component {
-    state = {}
-
-  // componentWillMount() {
-  //   this.setState({
-  //     lat: this.props.lat,
-  //     lng: this.props.lng,
-  //     address_to: this.props.address
-  //   })
-  // }
+    state = {
+      track_code: null
+    }
 
     handleChange = event => {
       const email = event.target.value;
@@ -40,8 +33,9 @@ export class Create extends Component {
 
       api().post(`/api/orders`, orders)
         .then(res => {
+          this.setState({track_code: res.data.track_code});
           console.log(res);
-          console.log(res.data);
+          // console.log(res.data.travel_time);
         })
     }
 
@@ -55,7 +49,7 @@ export class Create extends Component {
             onError={errors => console.log(errors)}
           >
             <TextValidator
-              style={{padding: 24, width: '80%'}}
+              style={{padding: '6px 12px 6px 24px', width: '80%'}}
               margin="normal"
               placeholder="Person email"
               onChange={this.handleChange}
@@ -66,6 +60,7 @@ export class Create extends Component {
             />
             <Button type="submit" variant="contained" color="primary">Add</Button>
           </ValidatorForm>
+          {this.state.track_code && <div style={{margin: 12, fontSize: '1.2rem', color: 'dimgray'}}><Paper style={{padding: 12, textAlign: 'center'}}>Track code: { this.state.track_code }</Paper></div>}
         </div>
       )
     }

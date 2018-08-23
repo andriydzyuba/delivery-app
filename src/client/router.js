@@ -2,7 +2,7 @@ import React from 'react';
 import { HashRouter as Router, Route, Link } from "react-router-dom";
 
 import HomeComponent from './components/home/home';
-import CreateComponent from './components/googlemapsapi/map';
+import CreateComponent from './components/map/map';
 import ListComponent from './components/orders/orders';
 import CheckComponent from './components/check/check';
 
@@ -17,10 +17,10 @@ const MainRouter = () => (
       <Grid item xs={2}>
         <Paper>
           <MenuList style={{width: '100%'}}>
-            <MenuItem><Link to="/">Home</Link></MenuItem>
-            <MenuItem><Link to="/create">Create order</Link></MenuItem>
-            <MenuItem><Link to="/check">Check order</Link></MenuItem>
-            <MenuItem><Link to="/list">List orders</Link></MenuItem>
+            <MenuItem><Link style={{textDecoration: 'none', fontSize: '1.2rem', paddingLeft: '10px'}} to="/">Home</Link></MenuItem>
+            <MenuItem><Link style={{textDecoration: 'none', fontSize: '1.2rem', paddingLeft: '10px'}} to="/create">Create order</Link></MenuItem>
+            <MenuItem><Link style={{textDecoration: 'none', fontSize: '1.2rem', paddingLeft: '10px'}} to="/check">Check order</Link></MenuItem>
+            <MenuItem><Link style={{textDecoration: 'none', fontSize: '1.2rem', paddingLeft: '10px'}} to="/list">List orders</Link></MenuItem>
           </MenuList>
         </Paper>
       </Grid>
@@ -34,4 +34,4 @@ const MainRouter = () => (
   </Router>
 );
 
-export default MainRouter;
+export default MainRouter

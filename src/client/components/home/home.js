@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import './home.css';
 import delivery from '../../../../public/delivery.png';
-// import axios from 'axios';
-import api from '../../api';
 
 class HomeComponent extends Component {
 

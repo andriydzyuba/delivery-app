@@ -1,4 +1,4 @@
-import React, {Component} from "react"
+import React, {Component} from "react";
 import api from "../../api";
 import {TextValidator, ValidatorForm} from "react-material-ui-form-validator";
 import Button from "@material-ui/core/Button";
@@ -107,5 +107,4 @@ class CheckComponent extends Component {
   }
 }
 
-// export default CheckComponent
 export default withStyles(styles)(CheckComponent);
