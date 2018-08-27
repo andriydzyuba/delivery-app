@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './orders.css';
 import api from '../../api';
 import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -42,10 +41,10 @@ class ListComponent extends Component {
             <TableRow>
               <TableCell>№</TableCell>
               <TableCell>Contacts</TableCell>
-              <TableCell>Address</TableCell>
+              <TableCell>Address (client)</TableCell>
               <TableCell>Date</TableCell>
               <TableCell>Status</TableCell>
-              <TableCell>Travel Time</TableCell>
+              <TableCell>Travel Time (min)</TableCell>
               <TableCell>Track Code</TableCell>
             </TableRow>
           </TableHead>
@@ -58,7 +57,7 @@ class ListComponent extends Component {
                   <TableCell>{orders.address_to}</TableCell>
                   <TableCell>{orders.date}</TableCell>
                   <TableCell>{orders.status}</TableCell>
-                  <TableCell>{orders.travel_time}</TableCell>
+                  <TableCell>{(orders.travel_time / 60).toFixed(2)}</TableCell>
                   <TableCell>{orders.track_code}</TableCell>
                 </TableRow>
               );

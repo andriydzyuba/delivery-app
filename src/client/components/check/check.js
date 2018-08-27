@@ -24,12 +24,13 @@ const styles = theme => ({
 class CheckComponent extends Component {
   state = {
     order: [],
-    showOrder: false
+    showOrder: false,
+    track_code: ''
   }
 
   handleChange = event => {
-    const track_code = event.target.value;
-    this.setState({ track_code });
+    // const track_code = event.target.value;
+    this.setState({ track_code: event.target.value });
 
     console.log(this.state);
   }
@@ -49,7 +50,7 @@ class CheckComponent extends Component {
   }
 
   render() {
-    const { track_code } = this.state;
+    // const { track_code } = this.state;
     const { classes } = this.props;
 
     return (
@@ -65,7 +66,7 @@ class CheckComponent extends Component {
             placeholder="Person track code"
             onChange={this.handleChange}
             name="track_code"
-            value={track_code}
+            value={this.state.track_code}
             validators={['required', 'minStringLength:10', 'maxStringLength:10']}
             errorMessages={['this field is required', 'track code is not valid']}
           />
@@ -80,10 +81,10 @@ class CheckComponent extends Component {
                   <TableRow>
                     <TableCell>№</TableCell>
                     <TableCell>Contacts</TableCell>
-                    <TableCell>Address</TableCell>
+                    <TableCell>Address (client)</TableCell>
                     <TableCell>Date</TableCell>
                     <TableCell>Status</TableCell>
-                    <TableCell>Travel Time</TableCell>
+                    <TableCell>Travel Time (min)</TableCell>
                     <TableCell>Track Code</TableCell>
                   </TableRow>
                 </TableHead>
@@ -94,7 +95,7 @@ class CheckComponent extends Component {
                         <TableCell>{this.state.order.address_to}</TableCell>
                         <TableCell>{this.state.order.date}</TableCell>
                         <TableCell>{this.state.order.status}</TableCell>
-                        <TableCell>{this.state.order.travel_time}</TableCell>
+                        <TableCell>{(this.state.order.travel_time / 60).toFixed(2)}</TableCell>
                         <TableCell>{this.state.order.track_code}</TableCell>
                       </TableRow>
                 </TableBody>
