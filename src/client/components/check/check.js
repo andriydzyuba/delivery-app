@@ -24,6 +24,7 @@ const styles = theme => ({
 class CheckComponent extends Component {
   state = {
     order: [],
+    order_param: [],
     showOrder: false,
     track_code: ''
   }
@@ -38,7 +39,7 @@ class CheckComponent extends Component {
   handleSubmit = event => {
     event.preventDefault();
 
-    api().get(`/api/check/`+this.state.track_code)
+    api().get(`/api/check/` + this.state.track_code)
       .then(res => {
         const order = res.data;
         this.setState({ order });
@@ -49,9 +50,18 @@ class CheckComponent extends Component {
       )
   }
 
+  componentDidMount() {
+    api().get(`/api/check/` + this.props.match.params.track_code)
+      .then(res => {
+        const order_param = res.data;
+        this.setState({ order_param });
+      })
+  }
+
   render() {
     // const { track_code } = this.state;
     const { classes } = this.props;
+    console.log(this.props.match.params.track_code);
 
     return (
       <div>
@@ -81,27 +91,57 @@ class CheckComponent extends Component {
                   <TableRow>
                     <TableCell>№</TableCell>
                     <TableCell>Contacts</TableCell>
+                    <TableCell>Address (store)</TableCell>
                     <TableCell>Address (client)</TableCell>
                     <TableCell>Date</TableCell>
                     <TableCell>Status</TableCell>
-                    <TableCell>Travel Time (min)</TableCell>
-                    <TableCell>Track Code</TableCell>
+                    <TableCell>Date Estimated</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                       <TableRow>
                         <TableCell>{this.state.order.id}</TableCell>
                         <TableCell>{this.state.order.contacts}</TableCell>
+                        <TableCell>{this.state.order.address_from}</TableCell>
                         <TableCell>{this.state.order.address_to}</TableCell>
                         <TableCell>{this.state.order.date}</TableCell>
                         <TableCell>{this.state.order.status}</TableCell>
-                        <TableCell>{(this.state.order.travel_time / 60).toFixed(2)}</TableCell>
-                        <TableCell>{this.state.order.track_code}</TableCell>
+                        <TableCell>{this.state.order.date_estimated}</TableCell>
                       </TableRow>
                 </TableBody>
               </Table>
             </Paper>
           </div>
+        }
+        {!this.state.showOrder && this.props.match.params.track_code !== ':track_code' &&
+        <div>
+          <Paper className={classes.root}>
+            <Table className={classes.table}>
+              <TableHead>
+                <TableRow>
+                  <TableCell>№</TableCell>
+                  <TableCell>Contacts</TableCell>
+                  <TableCell>Address (store)</TableCell>
+                  <TableCell>Address (client)</TableCell>
+                  <TableCell>Date</TableCell>
+                  <TableCell>Status</TableCell>
+                  <TableCell>Date Estimated</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                <TableRow>
+                  <TableCell>{this.state.order_param.id}</TableCell>
+                  <TableCell>{this.state.order_param.contacts}</TableCell>
+                  <TableCell>{this.state.order_param.address_from}</TableCell>
+                  <TableCell>{this.state.order_param.address_to}</TableCell>
+                  <TableCell>{this.state.order_param.date}</TableCell>
+                  <TableCell>{this.state.order_param.status}</TableCell>
+                  <TableCell>{this.state.order_param.date_estimated}</TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </Paper>
+        </div>
         }
       </div>
     )

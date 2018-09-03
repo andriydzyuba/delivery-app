@@ -1,9 +1,8 @@
 import React from "react"
-import { compose, withProps } from "recompose"
-import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps"
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 import Geocode from "react-geocode";
 import { Create } from "../create/create"
+import { RenderMap } from "./rendermap"
 import TextField from "@material-ui/core/TextField";
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
@@ -26,38 +25,19 @@ class CreateComponent extends React.PureComponent {
   state = {
     isMarkerShownFrom: false,
     isMarkerShownTo: false,
-    lat_from: 49.839683,
-    lng_from: 24.029717,
+    isDirections: false,
+    lat_from: null,
+    lng_from: null,
     address_from: 'вулиця Патона, 6, Львів, Львівська область, Україна, 79000',
-    lat_to: 49.839683,
-    lng_to: 24.029717,
+    lat_to: null,
+    lng_to: null,
     address_to: '',
     travel_time: 0,
     travel_distance: 0,
+    directions: null,
     search_from: '',
     search_to: '',
-    click: 0,
-    zoom: () => {
-      if (this.state.travel_distance < 7000){
-        return 14;
-      } else if (this.state.travel_distance > 7000 && this.state.travel_distance < 14000){
-        return 13;
-      } else if (this.state.travel_distance > 14000 && this.state.travel_distance < 25000) {
-        return 12;
-      } else if (this.state.travel_distance > 25000 && this.state.travel_distance < 50000) {
-        return 11;
-      } else if (this.state.travel_distance > 50000 && this.state.travel_distance < 100000) {
-        return 10;
-      } else if (this.state.travel_distance > 100000 && this.state.travel_distance < 250000) {
-        return 9;
-      } else if (this.state.travel_distance > 250000 && this.state.travel_distance < 500000) {
-        return 8;
-      } else if (this.state.travel_distance > 500000 && this.state.travel_distance < 1000000) {
-        return 7;
-      } else {
-        return 6;
-      }
-    }
+    click: 0
   }
 
   CheckTimeFrom = (lat, lng) => {
@@ -74,10 +54,9 @@ class CreateComponent extends React.PureComponent {
         console.log(point.duration.value);
         this.setState({
           travel_time: point.duration.value,
-          travel_distance: point.distance.value
+          travel_distance: point.distance.value,
+          directions: result
         });
-      } else {
-        console.error(`error fetching directions ${result}`);
       }
     });
   };
@@ -96,10 +75,9 @@ class CreateComponent extends React.PureComponent {
         console.log(point.duration.value);
         this.setState({
           travel_time: point.duration.value,
-          travel_distance: point.distance.value
+          travel_distance: point.distance.value,
+          directions: result
         });
-      } else {
-        console.error(`error fetching directions ${result}`);
       }
     });
   };
@@ -116,19 +94,6 @@ class CreateComponent extends React.PureComponent {
         activeFun(event);
       }
   }
-
-  // mapZoom = () => {
-  //   this.setState({
-  //     zoomToMarkers: map => {
-  //       let bounds = new google.maps.LatLngBounds();
-  //       let loc = new google.maps.LatLng(this.state.lat_from, this.state.lng_from);
-  //       let loc2 = new google.maps.LatLng(this.state.lat_to, this.state.lng_to);
-  //       bounds.extend (loc);
-  //       bounds.extend(loc2);
-  //       map.fitBounds(bounds);
-  //     }
-  //   })
-  // }
 
   handleClickFrom = event => {
     let lat = event.latLng.lat();
@@ -155,6 +120,7 @@ class CreateComponent extends React.PureComponent {
 
     this.setState({
       isMarkerShownFrom: true,
+      isDirections: true,
       lat_from: lat,
       lng_from: lng
     });
@@ -164,9 +130,6 @@ class CreateComponent extends React.PureComponent {
     let lat = event.latLng.lat();
     let lng = event.latLng.lng();
     console.log("B");
-    // Geocode.setApiKey('AIzaSyDsPZNXy11aKhMyvS1O_2S4dUSbkgOXOzo'); Key for Google Maps API and Geocoding API
-    // Geocode.setApiKey('AIzaSyAAnvKAk5sgTpNw9-0xXlFbYXA5uQlSUo4'); Key for Geocoding API
-    // Geocode.setApiKey('AIzaSyAIDeLxxU2MakRH0MHEmXn5mccyGKYIsz4'); Key for Geocoding API (another project)
     Geocode.fromLatLng(lat, lng).then(
       response => {
         const address = response.results[0].formatted_address;
@@ -185,6 +148,7 @@ class CreateComponent extends React.PureComponent {
 
     this.setState({
       isMarkerShownTo: true,
+      isDirections: true,
       lat_to: lat,
       lng_to: lng
     });
@@ -198,13 +162,14 @@ class CreateComponent extends React.PureComponent {
     geocodeByAddress(address)
       .then(results => getLatLng(results[0]))
       .then(({ lat, lng }) => {
+        console.log("A");
         console.log(lat, lng);
 
         this.CheckTimeFrom(lat, lng);
-        // this.mapZoom();
 
         this.setState({
           isMarkerShownFrom: true,
+          isDirections: true,
           lat_from: lat,
           lng_from: lng,
           address_from: address,
@@ -222,13 +187,14 @@ class CreateComponent extends React.PureComponent {
     geocodeByAddress(address)
       .then(results => getLatLng(results[0]))
       .then(({ lat, lng }) => {
+        console.log("B");
         console.log(lat, lng);
 
         this.CheckTimeTo(lat, lng);
-        // this.mapZoom();
 
         this.setState({
           isMarkerShownTo: true,
+          isDirections: true,
           lat_to: lat,
           lng_to: lng,
           address_to: address,
@@ -244,33 +210,21 @@ class CreateComponent extends React.PureComponent {
   render() {
     const { classes } = this.props;
 
-    const MapComponent = compose(
-      withProps({
-        googleMapURL: "https://maps.googleapis.com/maps/api/js?key=&libraries=geometry,drawing,places",
-        // googleMapURL: "https://maps.googleapis.com/maps/api/js?key=AIzaSyDsPZNXy11aKhMyvS1O_2S4dUSbkgOXOzo&libraries=geometry,drawing,places",
-        loadingElement: <div style={{ height: `100%` }} />,
-        containerElement: <div style={{ height: `600px`, width: '96%', margin: '0 2%' }} />,
-        mapElement: <div style={{ height: `100%` }} />,
-      }),
-      withScriptjs,
-      withGoogleMap
-    )((props) =>
-      <GoogleMap
-        // ref={this.state.zoomToMarkers}
-        defaultZoom={this.state.zoom()}
-        defaultCenter={{ lat: ((this.state.lat_from + this.state.lat_to) / 2), lng: ((this.state.lng_from + this.state.lng_to) / 2) }}
-        onClick={this.clickSwitch}
-      >
-        {props.isMarkerShownFrom && <Marker position={{ lat: this.state.lat_from, lng: this.state.lng_from }} label={'A'} />}
-        {props.isMarkerShownTo && <Marker position={{ lat: this.state.lat_to, lng: this.state.lng_to }} label={'B'} />}
-      </GoogleMap>
-    )
-
     return (
       <div>
-        <MapComponent
+        <RenderMap
+          onMapClick={this.clickSwitch}
+
           isMarkerShownFrom={this.state.isMarkerShownFrom}
           isMarkerShownTo={this.state.isMarkerShownTo}
+          isDirections={this.state.isDirections}
+
+          lat_from={this.state.lat_from}
+          lng_from={this.state.lng_from}
+          lat_to={this.state.lat_to}
+          lng_to={this.state.lng_to}
+
+          directions={this.state.directions}
         />
         <br/>
         <Grid container spacing={16}>
@@ -338,5 +292,4 @@ class CreateComponent extends React.PureComponent {
   }
 }
 
-// export default CreateComponent
 export default withStyles(styles)(CreateComponent);

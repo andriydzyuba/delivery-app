@@ -10,10 +10,15 @@ module.exports = {
       },
       status: {
         type: Sequelize.ENUM,
-        values: ['free', 'delivery', 'return']
+        values: ['free', 'busy']
       },
-      available_nt: {
-        type: Sequelize.STRING
+      available_at: {
+        type: Sequelize.DATE,
+        defaultValue: DataTypes.NOW
+      },
+      available_check: {
+        type: Sequelize.DATE,
+        defaultValue: DataTypes.NOW
       },
       available: {
         type: Sequelize.BOOLEAN,
@@ -28,10 +33,10 @@ module.exports = {
         type: Sequelize.DATE,
         allowNull: false
       },
-      FormOrdersID: {
+      OrdersId: {
         type: Sequelize.INTEGER,
         onDelete: "CASCADE",
-        allowNull: false,
+        allowNull: true,
         references: {
           model: 'Orders',
           key: 'id'

@@ -28,7 +28,7 @@ export class Create extends Component {
         point_to: { type: 'Point', coordinates: [this.props.lat_to, this.props.lng_to]},
         address_to: this.props.address_to,
         travel_time: this.props.travel_time,
-        status: 'in stock'
+        status: 'waiting'
       };
 
       console.log(orders);

@@ -44,7 +44,7 @@ class ListComponent extends Component {
               <TableCell>Address (client)</TableCell>
               <TableCell>Date</TableCell>
               <TableCell>Status</TableCell>
-              <TableCell>Travel Time (min)</TableCell>
+              <TableCell>Date Estimated</TableCell>
               <TableCell>Track Code</TableCell>
             </TableRow>
           </TableHead>
@@ -57,7 +57,7 @@ class ListComponent extends Component {
                   <TableCell>{orders.address_to}</TableCell>
                   <TableCell>{orders.date}</TableCell>
                   <TableCell>{orders.status}</TableCell>
-                  <TableCell>{(orders.travel_time / 60).toFixed(2)}</TableCell>
+                  <TableCell>{orders.date_estimated}</TableCell>
                   <TableCell>{orders.track_code}</TableCell>
                 </TableRow>
               );

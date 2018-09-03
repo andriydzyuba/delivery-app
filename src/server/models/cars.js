@@ -9,10 +9,15 @@ module.exports = (sequelize, DataTypes) => {
     },
     status: {
       type: DataTypes.ENUM,
-      values: ['free', 'delivery', 'return']
+      values: ['free', 'busy']
     },
     available_at: {
-      type: DataTypes.STRING
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW
+    },
+    available_check: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW
     },
     available: {
       type: DataTypes.BOOLEAN,
@@ -24,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
     models.Cars.belongsTo(models.Orders, {
       onDelete: "CASCADE",
       foreignKey: {
-        allowNull: false
+        allowNull: true
       }
     });
   };

@@ -10,18 +10,19 @@ module.exports = {
       },
       address_from: {
         type: Sequelize.STRING,
-        allowNull: false,
-        defaultValue: 'Lviv'
+        allowNull: false
       },
       address_to: {
         type: Sequelize.STRING,
         allowNull: false
       },
       point_from: {
-        type: Sequelize.GEOMETRY('POINT')
+        type: Sequelize.GEOMETRY('POINT'),
+        allowNull: false
       },
       point_to: {
-        type: Sequelize.GEOMETRY('POINT')
+        type: Sequelize.GEOMETRY('POINT'),
+        allowNull: false
       },
       contacts: {
         type: Sequelize.STRING
@@ -37,11 +38,12 @@ module.exports = {
         type: Sequelize.DATE
       },
       track_code: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
       },
       status: {
         type: Sequelize.ENUM,
-        values: ['in stock', 'in the way', 'delivered']
+        values: ['waiting', 'processing', 'delivered']
       },
       createdAt: {
         type: Sequelize.DATE,

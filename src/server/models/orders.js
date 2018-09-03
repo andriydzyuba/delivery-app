@@ -9,18 +9,19 @@ module.exports = (sequelize, DataTypes) => {
     },
     address_from: {
       type: DataTypes.STRING,
-      allowNull: false,
-      defaultValue: 'Lviv'
+      allowNull: false
     },
     address_to: {
       type: DataTypes.STRING,
       allowNull: false
     },
     point_from: {
-      type: DataTypes.GEOMETRY('POINT')
+      type: DataTypes.GEOMETRY('POINT'),
+      allowNull: false
     },
     point_to: {
-      type: DataTypes.GEOMETRY('POINT')
+      type: DataTypes.GEOMETRY('POINT'),
+      allowNull: false
     },
     contacts: {
       type: DataTypes.STRING
@@ -36,11 +37,12 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE
     },
     track_code: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      allowNull: false
     },
     status: {
       type: DataTypes.ENUM,
-      values: ['in stock', 'in the way', 'delivered']
+      values: ['waiting', 'processing', 'delivered']
     }
   });
   Orders.associate = function(models) {

@@ -15,8 +15,12 @@
   "dependencies": {
     "@material-ui/core": "^1.5.0",
     "axios": "^0.18.0",
+    "bluebird": "^3.5.1,",
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
+    "moment": "^2.22.2",
+    "nodemailer": "^4.6.8",
+    "node-cron": "^1.2.1",
     "pg": "^7.4.3",
     "pg-hstore": "^2.3.2",
     "prop-types": "^15.6.2",
@@ -34,6 +38,7 @@
     "recompose": "^0.28.2",
     "redux": "^4.0.0",
     "redux-thunk": "^2.3.0",
+    "reselect": "^3.0.1",
     "sequelize": "^4.38.0",
     "sequelize-cli": "^4.0.0"
   },
