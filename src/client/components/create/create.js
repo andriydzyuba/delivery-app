@@ -45,30 +45,25 @@ export class Create extends Component {
       // const { email } = this.state;
       return (
         <div>
-          <Grid container spacing={16}>
-            <Grid item xs={8}>
-              <ValidatorForm
-                ref="form"
-                onSubmit={this.handleSubmit}
-                onError={errors => console.log(errors)}
-              >
-                <TextValidator
-                  style={{padding: '24px 7% 24px 24px', width: '69%'}}
-                  margin="normal"
-                  placeholder="Person email"
-                  onChange={this.handleChange}
-                  name="email"
-                  value={this.state.email}
-                  validators={['required', 'isEmail']}
-                  errorMessages={['this field is required', 'email is not valid']}
-                />
-                <Button type="submit" variant="contained" color="primary">Add Order</Button>
-              </ValidatorForm>
-            </Grid>
-            <Grid item xs={4}>
-              {this.state.track_code && <div style={{margin: '30px 30% 0 0', fontSize: '1.2rem', color: 'dimgray'}}><Paper style={{padding: 12, textAlign: 'center'}}>Track code: { this.state.track_code }</Paper></div>}
-            </Grid>
-          </Grid>
+          <ValidatorForm
+            ref="form"
+            onSubmit={this.handleSubmit}
+            onError={errors => console.log(errors)}
+          >
+            <TextValidator
+              style={{padding: '20px', width: '95%'}}
+              margin="normal"
+              placeholder="Person email"
+              onChange={this.handleChange}
+              name="email"
+              value={this.state.email}
+              validators={['required', 'isEmail']}
+              errorMessages={['this field is required', 'email is not valid']}
+            />
+            <Button style={{margin: '20px', width: '95%'}} type="submit" variant="contained" color="primary">Add Order</Button>
+          </ValidatorForm>
+          {this.state.track_code && <div style={{margin: '24px', fontSize: '1.2rem', color: 'dimgray'}}>
+            <Paper style={{padding: 16, textAlign: 'center'}}>Track code: { this.state.track_code }</Paper></div>}
         </div>
       )
     }

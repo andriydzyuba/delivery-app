@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 import api from '../../api';
 import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -55,9 +56,9 @@ class ListComponent extends Component {
                   <TableCell>{orders.id}</TableCell>
                   <TableCell>{orders.contacts}</TableCell>
                   <TableCell>{orders.address_to}</TableCell>
-                  <TableCell>{orders.date}</TableCell>
+                  <TableCell>{moment(orders.date).format('LLL')}</TableCell>
                   <TableCell>{orders.status}</TableCell>
-                  <TableCell>{orders.date_estimated}</TableCell>
+                  <TableCell>{moment(orders.date_estimated).format('LLL')}</TableCell>
                   <TableCell>{orders.track_code}</TableCell>
                 </TableRow>
               );

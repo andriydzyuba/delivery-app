@@ -1,22 +1,32 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 import api from '../../api';
 import Paper from "@material-ui/core/Paper";
-import Table from "@material-ui/core/Table";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import TableCell from "@material-ui/core/TableCell";
-import TableBody from "@material-ui/core/TableBody";
 import {withStyles} from "@material-ui/core/styles";
 import Button from '@material-ui/core/Button';
+import LocalShippingIcon from '@material-ui/icons/LocalShipping';
+import Avatar from "@material-ui/core/Avatar";
+import Grid from "@material-ui/core/Grid";
+import ListItem from "@material-ui/core/ListItem";
+import FormatListNumberedIcon from "@material-ui/icons/FormatListNumbered";
+import ListItemText from "@material-ui/core/ListItemText";
+import Divider from "@material-ui/core/Divider";
+import MailIcon from "@material-ui/icons/Mail";
+import LocationOnIcon from "@material-ui/icons/LocationOn";
+import List from "@material-ui/core/List";
 
 const styles = theme => ({
   root: {
-    width: '100%',
-    overflowX: 'auto',
+    width: '100%'
   },
-  table: {
-    minWidth: 700,
+  avatar: {
+    width: '120px',
+    height: '120px',
+    margin: '20% auto auto 20%'
   },
+  icon: {
+    fontSize: '90px'
+  }
 });
 
 class CarsComponent extends Component {
@@ -53,64 +63,67 @@ class CarsComponent extends Component {
       <div>
         <Button disabled={true} onClick={this.handleClick} variant="contained" color="primary">Add Car</Button>
         <br/><br/>
-        <Paper className={classes.root}>
-          <Table className={classes.table}>
-            <TableHead>
-              <TableRow>
-                <TableCell>№</TableCell>
-                <TableCell>Status</TableCell>
-                <TableCell>Available</TableCell>
-                <TableCell>Order (№)</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {this.state.cars.map(cars => {
-                return (
-                  <TableRow key={cars.id}>
-                    <TableCell>{cars.id}</TableCell>
-                    <TableCell>{cars.status}</TableCell>
-                    <TableCell>{cars.available_at}</TableCell>
-                    <TableCell>{cars.OrderId}</TableCell>
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
-        </Paper>
+        <div className={classes.root}>
+          <Grid container spacing={40}>
+          {this.state.cars.map(cars => {
+            return (
+              <Grid item xs={12} md={6} lg={4} key={cars.id}>
+                <Paper className={classes.paper}>
+                  <Grid container spacing={8}>
+                    <Grid item xs={4}>
+                      {cars.status === 'free' &&
+                        <Avatar className={classes.avatar} style={{backgroundColor: 'green'}}>
+                          <LocalShippingIcon className={classes.icon}/>
+                        </Avatar>}
+                      {cars.status === 'busy' &&
+                        <Avatar className={classes.avatar} style={{backgroundColor: 'red'}}>
+                          <LocalShippingIcon className={classes.icon}/>
+                        </Avatar>}
+                    </Grid>
+                    <Grid item xs={8}>
+                      <List>
+                        <ListItem>
+                          <Avatar>
+                            <FormatListNumberedIcon />
+                          </Avatar>
+                          <ListItemText primary="№ (id)" secondary={cars.id} />
+                        </ListItem>
+                        <li>
+                          <Divider inset />
+                        </li>
+                        <ListItem>
+                          <Avatar>
+                            <MailIcon />
+                          </Avatar>
+                          <ListItemText primary="Status" secondary={cars.status} />
+                        </ListItem>
+                        <Divider inset component="li" />
+                        <ListItem>
+                          <Avatar>
+                            <LocationOnIcon />
+                          </Avatar>
+                          <ListItemText primary="Available" secondary={moment(cars.available_at).format('LLL')} />
+                        </ListItem>
+                        <Divider inset component="li" />
+                        <ListItem>
+                          <Avatar>
+                            <LocationOnIcon />
+                          </Avatar>
+                          {cars.OrderId === null && <ListItemText primary="Order № (id)" secondary='-' />}
+                          {cars.OrderId !== null && <ListItemText primary="Order № (id)" secondary={cars.OrderId} />}
+                        </ListItem>
+                      </List>
+                    </Grid>
+                  </Grid>
+                </Paper>
+              </Grid>
+            );
+          })}
+          </Grid>
+        </div>
       </div>
     )
   }
 }
 
 export default withStyles(styles)(CarsComponent);
-
-// class CarsComponent extends Component {
-//     state = {}
-//
-//     handleClick = event => {
-//       event.preventDefault();
-//
-//       const cars = {
-//         status: 'free',
-//         available_at: '',
-//         available: true,
-//         OrderId: 3
-//       }
-//
-//       api().post(`/api/cars`, cars)
-//         .then(res => {
-//           console.log(res);
-//           console.log(res.data);
-//         })
-//     }
-//
-//     render() {
-//       return (
-//         <div>
-//           <Button onClick={this.handleClick} variant="contained" color="primary">Add Car</Button>
-//         </div>
-//       )
-//     }
-// }
-//
-// export default CarsComponent

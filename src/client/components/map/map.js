@@ -8,12 +8,13 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 const styles = theme => ({
   paper: {
     display: 'flex',
-    width: '92%',
-    marginLeft: '25px',
+    width: '95%',
+    marginLeft: '20px',
   },
   item: {
     width: '100%',
@@ -28,10 +29,12 @@ class CreateComponent extends React.PureComponent {
     isDirections: false,
     lat_from: null,
     lng_from: null,
-    address_from: 'вулиця Патона, 6, Львів, Львівська область, Україна, 79000',
+    address_from: '',
     lat_to: null,
     lng_to: null,
     address_to: '',
+    current_lat: null,
+    current_lng: null,
     travel_time: 0,
     travel_distance: 0,
     directions: null,
@@ -204,31 +207,28 @@ class CreateComponent extends React.PureComponent {
       .catch(error => console.error('Error', error));
   }
 
-  componentDidMount() {
+  componentWillMount(){
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        this.setState({
+          current_lat: position.coords.latitude,
+          current_lng: position.coords.longitude,
+          error: null,
+        });
+      },
+      (error) => this.setState({ error: error.message }),
+      { enableHighAccuracy: false, timeout: 200000, maximumAge: 1000 },
+    );
   }
 
   render() {
     const { classes } = this.props;
+    console.log(this.state.current_lat, this.state.current_lng);
 
     return (
       <div>
-        <RenderMap
-          onMapClick={this.clickSwitch}
-
-          isMarkerShownFrom={this.state.isMarkerShownFrom}
-          isMarkerShownTo={this.state.isMarkerShownTo}
-          isDirections={this.state.isDirections}
-
-          lat_from={this.state.lat_from}
-          lng_from={this.state.lng_from}
-          lat_to={this.state.lat_to}
-          lng_to={this.state.lng_to}
-
-          directions={this.state.directions}
-        />
-        <br/>
-        <Grid container spacing={16}>
-          <Grid item xs={6}>
+        <Grid container spacing={8}>
+          <Grid item xs={12} lg={5}>
             <PlacesAutocomplete
               value={this.state.search_from}
               onChange={this.handleChangeFrom}
@@ -236,13 +236,13 @@ class CreateComponent extends React.PureComponent {
             >
               {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
                 <div>
-                  <TextField style={{padding: '24px', width: '92%'}}
+                  <TextField style={{padding: '20px', width: '95%'}}
                              placeholder="Search Start Places ..."
                              margin="normal"
                              {...getInputProps()}
                   />
                   <div>
-                    {loading && <div>Loading...</div>}
+                    {loading && <LinearProgress style={{margin: '0 20px', width: '95%'}}/>}
                     {suggestions.map(suggestion => {
                       return (
                         <Paper className={classes.paper} {...getSuggestionItemProps(suggestion)}>
@@ -254,8 +254,6 @@ class CreateComponent extends React.PureComponent {
                 </div>
               )}
             </PlacesAutocomplete>
-          </Grid>
-          <Grid item xs={6}>
             <PlacesAutocomplete
               value={this.state.search_to}
               onChange={this.handleChangeTo}
@@ -263,13 +261,13 @@ class CreateComponent extends React.PureComponent {
             >
               {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
                 <div>
-                  <TextField style={{padding: '24px', width: '92%'}}
+                  <TextField style={{padding: '20px', width: '95%'}}
                              placeholder="Search Finish Places ..."
                              margin="normal"
                              {...getInputProps()}
                   />
                   <div>
-                    {loading && <div>Loading...</div>}
+                    {loading && <LinearProgress style={{margin: '0 20px', width: '95%'}}/>}
                     {suggestions.map(suggestion => {
                       return (
                         <Paper className={classes.paper} {...getSuggestionItemProps(suggestion)}>
@@ -281,12 +279,50 @@ class CreateComponent extends React.PureComponent {
                 </div>
               )}
             </PlacesAutocomplete>
+            <Create lat_from={this.state.lat_from} lng_from={this.state.lng_from} address_from={this.state.address_from}
+                    lat_to={this.state.lat_to} lng_to={this.state.lng_to} address_to={this.state.address_to}
+                    travel_time={this.state.travel_time}
+            />
+          </Grid>
+          <Grid item xs={12} lg={7}>
+            {this.state.current_lat === null &&
+            <RenderMap
+              onMapClick={this.clickSwitch}
+
+              isMarkerShownFrom={this.state.isMarkerShownFrom}
+              isMarkerShownTo={this.state.isMarkerShownTo}
+              isDirections={this.state.isDirections}
+
+              lat_from={this.state.lat_from}
+              lng_from={this.state.lng_from}
+              lat_to={this.state.lat_to}
+              lng_to={this.state.lng_to}
+
+              current_lat={49.839683}
+              current_lng={24.029717}
+
+              directions={this.state.directions}
+            />}
+            {this.state.current_lat !== null &&
+            <RenderMap
+              onMapClick={this.clickSwitch}
+
+              isMarkerShownFrom={this.state.isMarkerShownFrom}
+              isMarkerShownTo={this.state.isMarkerShownTo}
+              isDirections={this.state.isDirections}
+
+              lat_from={this.state.lat_from}
+              lng_from={this.state.lng_from}
+              lat_to={this.state.lat_to}
+              lng_to={this.state.lng_to}
+
+              current_lat={this.state.current_lat}
+              current_lng={this.state.current_lng}
+
+              directions={this.state.directions}
+            />}
           </Grid>
         </Grid>
-        <Create lat_from={this.state.lat_from} lng_from={this.state.lng_from} address_from={this.state.address_from}
-                lat_to={this.state.lat_to} lng_to={this.state.lng_to} address_to={this.state.address_to}
-                travel_time={this.state.travel_time}
-        />
       </div>
     )
   }
