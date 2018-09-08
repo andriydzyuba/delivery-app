@@ -13,7 +13,10 @@ function getCars(req, res){
 
 function createCar(req, res){
   models.Cars.create({
-    status: req.body.status
+    status: req.body.status,
+    location: req.body.location,
+    location_check: req.body.location_check,
+    point: req.body.point
   }).then((cars) => {
     res.send(cars);
   });

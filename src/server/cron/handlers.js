@@ -98,7 +98,7 @@ function isOrderDelivered(order){
       {where: {id: order.dataValues.id}}
     );
     models.Cars.update(
-      {status: 'free', available: true, available_at: nowDate, OrderId: null},
+      {status: 'free', available: true, OrderId: null},
       {where: {OrderId: order.dataValues.id}}
     )
     return sendMail.sendNewMail(order);
@@ -149,7 +149,7 @@ function assignOrderToCar(order, car){
   let nowDate = moment().toDate();
   let finalDateEstimated = moment(nowDate).add(order.dataValues.travel_time, 'seconds').toDate();
   models.Cars.update(
-    {status: 'busy', available: false},
+    {status: 'busy', available_at: finalDateEstimated, location: order.dataValues.address_to},
     {where: {id: car.dataValues.id}}
   );
   models.Orders.update(

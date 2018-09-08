@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import MainRouter from './router';
+import Footer from './components/footer';
 
 export default class App extends Component {
 
@@ -7,6 +8,8 @@ export default class App extends Component {
     return (
       <div>
         <MainRouter/>
+        <br/><br/><br/><br/>
+        <Footer/>
       </div>
     );
   }

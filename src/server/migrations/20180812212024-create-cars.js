@@ -20,10 +20,17 @@ module.exports = {
         type: Sequelize.DATE,
         defaultValue: DataTypes.NOW
       },
-      available: {
-        type: Sequelize.BOOLEAN,
-        allowNull: false,
-        defaultValue: true
+      location: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      location_check: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      point: {
+        type: Sequelize.GEOMETRY('POINT'),
+        allowNull: false
       },
       createdAt: {
         type: Sequelize.DATE,

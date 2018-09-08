@@ -19,10 +19,17 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW
     },
-    available: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: true
+    location: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    location_check: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    point: {
+      type: DataTypes.GEOMETRY('POINT'),
+      allowNull: false
     }
   });
   Cars.associate = function(models) {

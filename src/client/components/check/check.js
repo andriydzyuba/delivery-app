@@ -180,9 +180,18 @@ class CheckComponent extends Component {
                     </ListItem>
                     <Divider inset component="li" />
                     <ListItem>
-                      <Avatar>
+                      {this.state.order.status === 'waiting' &&
+                      <Avatar style={{backgroundColor: 'red'}}>
                         <EditAttributesIcon />
-                      </Avatar>
+                      </Avatar>}
+                      {this.state.order.status === 'processing' &&
+                      <Avatar style={{backgroundColor: 'yellow'}}>
+                        <EditAttributesIcon />
+                      </Avatar>}
+                      {this.state.order.status === 'delivered' &&
+                      <Avatar style={{backgroundColor: 'green'}}>
+                        <EditAttributesIcon />
+                      </Avatar>}
                       <ListItemText primary="Status" secondary={this.state.order.status} />
                     </ListItem>
                     <Divider inset component="li" />
@@ -254,9 +263,18 @@ class CheckComponent extends Component {
                   </ListItem>
                   <Divider inset component="li" />
                   <ListItem>
-                    <Avatar>
+                    {this.state.order_param.status === 'waiting' &&
+                    <Avatar style={{backgroundColor: 'red'}}>
                       <EditAttributesIcon />
-                    </Avatar>
+                    </Avatar>}
+                    {this.state.order_param.status === 'processing' &&
+                    <Avatar style={{backgroundColor: 'yellow'}}>
+                      <EditAttributesIcon />
+                    </Avatar>}
+                    {this.state.order_param.status === 'delivered' &&
+                    <Avatar style={{backgroundColor: 'green'}}>
+                      <EditAttributesIcon />
+                    </Avatar>}
                     <ListItemText primary="Status" secondary={this.state.order_param.status} />
                   </ListItem>
                   <Divider inset component="li" />

@@ -8,7 +8,8 @@ import Grid from "@material-ui/core/Grid";
 export class Create extends Component {
     state = {
       track_code: null,
-      email: ''
+      email: '',
+      button: false
     }
 
     handleChange = event => {
@@ -35,7 +36,10 @@ export class Create extends Component {
 
       api().post(`/api/orders`, orders)
         .then(res => {
-          this.setState({track_code: res.data.track_code});
+          this.setState({
+            track_code: res.data.track_code,
+            button: true
+          });
           console.log(res);
           // console.log(res.data.travel_time);
         })
@@ -60,7 +64,7 @@ export class Create extends Component {
               validators={['required', 'isEmail']}
               errorMessages={['this field is required', 'email is not valid']}
             />
-            <Button style={{margin: '20px', width: '95%'}} type="submit" variant="contained" color="primary">Add Order</Button>
+            <Button disabled={this.state.button} style={{margin: '20px', width: '95%'}} type="submit" variant="contained" color="primary">Add Order</Button>
           </ValidatorForm>
           {this.state.track_code && <div style={{margin: '24px', fontSize: '1.2rem', color: 'dimgray'}}>
             <Paper style={{padding: 16, textAlign: 'center'}}>Track code: { this.state.track_code }</Paper></div>}
