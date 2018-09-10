@@ -29,7 +29,6 @@ class ListComponent extends Component {
       .then(res => {
         const orders = res.data;
         this.setState({ orders });
-        console.log(res.data)
       })
   }
 

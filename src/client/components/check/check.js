@@ -39,10 +39,7 @@ class CheckComponent extends Component {
   }
 
   handleChange = event => {
-    // const track_code = event.target.value;
     this.setState({ track_code: event.target.value });
-
-    console.log(this.state);
   }
 
   handleSubmit = event => {
@@ -52,7 +49,6 @@ class CheckComponent extends Component {
       .then(res => {
         const order = res.data;
         this.setState({ order });
-        console.log(order)
       })
       .then (
         this.setState({ showOrder: true })
@@ -100,9 +96,7 @@ class CheckComponent extends Component {
   }
 
   render() {
-    // const { track_code } = this.state;
     const { classes } = this.props;
-    console.log(this.props.match.params.track_code);
 
     return (
       <div>
@@ -162,7 +156,7 @@ class CheckComponent extends Component {
                       <Avatar>
                         <LocationOnIcon />
                       </Avatar>
-                      <ListItemText primary="Address (client)" secondary={this.state.order.address_from} />
+                      <ListItemText primary="Address (shop)" secondary={this.state.order.address_from} />
                     </ListItem>
                     <Divider inset component="li" />
                     <ListItem>

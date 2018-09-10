@@ -3,7 +3,6 @@ import api from '../../api';
 import Button from '@material-ui/core/Button';
 import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import Paper from "@material-ui/core/Paper";
-import Grid from "@material-ui/core/Grid";
 
 export class Create extends Component {
     state = {
@@ -13,10 +12,7 @@ export class Create extends Component {
     }
 
     handleChange = event => {
-      // const email = event.target.value;
       this.setState({ email: event.target.value });
-
-      console.log(this.state);
     }
 
     handleSubmit = event => {
@@ -32,21 +28,16 @@ export class Create extends Component {
         status: 'waiting'
       };
 
-      console.log(orders);
-
       api().post(`/api/orders`, orders)
         .then(res => {
           this.setState({
             track_code: res.data.track_code,
             button: true
           });
-          console.log(res);
-          // console.log(res.data.travel_time);
         })
     }
 
     render() {
-      // const { email } = this.state;
       return (
         <div>
           <ValidatorForm

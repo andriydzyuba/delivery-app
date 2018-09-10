@@ -1,20 +1,18 @@
 import React from "react";
 import {compose, withProps} from "recompose";
-import {GoogleMap, DirectionsRenderer, Marker, withGoogleMap, withScriptjs} from "react-google-maps";
+import {GoogleMap, DirectionsRenderer, Marker, withGoogleMap} from "react-google-maps";
 
 export const RenderMap = compose(
   withProps({
     googleMapURL: "", //https://maps.googleapis.com/maps/api/js?key=&libraries=geometry,drawing,places
     loadingElement: <div style={{ height: `100%` }} />,
-    containerElement: <div style={{ height: `800px`, width: '100%'}} />,
+    containerElement: <div style={{ height: `796px`, width: '100%'}} />,
     mapElement: <div style={{ height: `100%` }} />,
   }),
-  // withScriptjs,
   withGoogleMap
 )((props) =>
   <GoogleMap
     defaultZoom={13}
-    // defaultCenter={new google.maps.LatLng(49.839683, 24.029717)}
     defaultCenter={new google.maps.LatLng(props.current_lat, props.current_lng)}
     onClick={props.onMapClick}
   >

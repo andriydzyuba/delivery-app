@@ -15,6 +15,6 @@ export const RenderMiniMap = compose(
     defaultZoom={13}
     defaultCenter={new google.maps.LatLng(49.839683, 24.029717)}
   >
-
+    {props.directions && <DirectionsRenderer directions={props.directions} />}
   </GoogleMap>
 )

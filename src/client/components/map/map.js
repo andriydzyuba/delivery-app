@@ -53,8 +53,6 @@ class CreateComponent extends React.PureComponent {
     }, (result, status) => {
       if (status === google.maps.DirectionsStatus.OK) {
         let point = result.routes[ 0 ].legs[ 0 ];
-        console.log(point.distance.value);
-        console.log(point.duration.value);
         this.setState({
           travel_time: point.duration.value,
           travel_distance: point.distance.value,
@@ -74,8 +72,6 @@ class CreateComponent extends React.PureComponent {
     }, (result, status) => {
       if (status === google.maps.DirectionsStatus.OK) {
         let point = result.routes[ 0 ].legs[ 0 ];
-        console.log(point.distance.value);
-        console.log(point.duration.value);
         this.setState({
           travel_time: point.duration.value,
           travel_distance: point.distance.value,
@@ -112,14 +108,10 @@ class CreateComponent extends React.PureComponent {
           address_from: address,
           search_from: address
         });
-      },
-      error => {
-        console.error(error);
       }
     );
 
     this.CheckTimeFrom(lat, lng);
-    // this.mapZoom();
 
     this.setState({
       isMarkerShownFrom: true,
@@ -140,14 +132,10 @@ class CreateComponent extends React.PureComponent {
           address_to: address,
           search_to: address
         });
-      },
-      error => {
-        console.error(error);
       }
     );
 
     this.CheckTimeTo(lat, lng);
-    // this.mapZoom();
 
     this.setState({
       isMarkerShownTo: true,
@@ -166,7 +154,6 @@ class CreateComponent extends React.PureComponent {
       .then(results => getLatLng(results[0]))
       .then(({ lat, lng }) => {
         console.log("A");
-        console.log(lat, lng);
 
         this.CheckTimeFrom(lat, lng);
 
@@ -179,7 +166,6 @@ class CreateComponent extends React.PureComponent {
           search_from: address
         });
       })
-      .catch(error => console.error('Error', error));
   }
 
   handleChangeTo = search_to => {
@@ -191,7 +177,6 @@ class CreateComponent extends React.PureComponent {
       .then(results => getLatLng(results[0]))
       .then(({ lat, lng }) => {
         console.log("B");
-        console.log(lat, lng);
 
         this.CheckTimeTo(lat, lng);
 
@@ -204,7 +189,6 @@ class CreateComponent extends React.PureComponent {
           search_to: address
         });
       })
-      .catch(error => console.error('Error', error));
   }
 
   componentWillMount(){
@@ -223,7 +207,6 @@ class CreateComponent extends React.PureComponent {
 
   render() {
     const { classes } = this.props;
-    console.log(this.state.current_lat, this.state.current_lng);
 
     return (
       <div>

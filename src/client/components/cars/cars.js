@@ -4,7 +4,7 @@ import api from '../../api';
 import { RenderMiniMap } from "./minimap"
 import Paper from "@material-ui/core/Paper";
 import {withStyles} from "@material-ui/core/styles";
-import Button from '@material-ui/core/Button';
+// import Button from '@material-ui/core/Button';
 import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 import Avatar from "@material-ui/core/Avatar";
 import Grid from "@material-ui/core/Grid";
@@ -12,7 +12,6 @@ import ListItem from "@material-ui/core/ListItem";
 import FormatListNumberedIcon from "@material-ui/icons/FormatListNumbered";
 import ListItemText from "@material-ui/core/ListItemText";
 import Divider from "@material-ui/core/Divider";
-// import EditAttributesIcon from '@material-ui/icons/EditAttributes';
 import TimerIcon from "@material-ui/icons/Timer";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import List from "@material-ui/core/List";
@@ -37,29 +36,28 @@ class CarsComponent extends Component {
     cars: []
   }
 
-  handleClick = event => {
-    event.preventDefault();
-
-    const cars = {
-      status: 'free',
-      location: 'Львів, Львівська область, Україна',
-      location_check: 'Львів, Львівська область, Україна',
-      point: { type: 'Point', coordinates: [49.839683, 24.029717]}
-    }
-
-    api().post(`/api/cars`, cars)
-      .then(res => {
-        console.log(res);
-        console.log(res.data);
-      })
-  }
+  // handleClick = event => {
+  //   event.preventDefault();
+  //
+  //   const cars = {
+  //     status: 'free',
+  //     location: 'Львів, Львівська область, Україна',
+  //     location_check: 'Львів, Львівська область, Україна',
+  //     point: { type: 'Point', coordinates: [49.839683, 24.029717]}
+  //   }
+  //
+  //   api().post(`/api/cars`, cars)
+  //     .then(res => {
+  //       console.log(res);
+  //       console.log(res.data);
+  //     })
+  // }
 
   componentDidMount() {
     api().get(`/api/cars`)
       .then(res => {
         const cars = res.data;
         this.setState({ cars });
-        console.log(res.data)
       })
   }
 
@@ -67,7 +65,7 @@ class CarsComponent extends Component {
     const { classes } = this.props;
     return (
       <div>
-        {/*<Button disabled={true} onClick={this.handleClick} variant="contained" color="primary">Add Car</Button>*/}
+        {/*<Button disabled={false} onClick={this.handleClick} variant="contained" color="primary">Add Car</Button>*/}
         {/*<br/><br/>*/}
         <div className={classes.root}>
           <Grid container spacing={16}>
@@ -80,14 +78,6 @@ class CarsComponent extends Component {
                       <RenderMiniMap
                         location={cars.point.coordinates}
                       />
-                      {/*{cars.status === 'free' &&*/}
-                        {/*<Avatar className={classes.avatar} style={{backgroundColor: 'green'}}>*/}
-                          {/*<LocalShippingIcon className={classes.icon}/>*/}
-                        {/*</Avatar>}*/}
-                      {/*{cars.status === 'busy' &&*/}
-                        {/*<Avatar className={classes.avatar} style={{backgroundColor: 'red'}}>*/}
-                          {/*<LocalShippingIcon className={classes.icon}/>*/}
-                        {/*</Avatar>}*/}
                     </Grid>
                     <Grid item xs={12} md={6}>
                       <List>
@@ -109,9 +99,6 @@ class CarsComponent extends Component {
                             <Avatar style={{backgroundColor: 'red'}}>
                               <LocalShippingIcon />
                             </Avatar>}
-                          {/*<Avatar>*/}
-                            {/*<EditAttributesIcon />*/}
-                          {/*</Avatar>*/}
                           <ListItemText primary="Status" secondary={cars.status} />
                         </ListItem>
                         <Divider inset component="li" />
@@ -134,7 +121,7 @@ class CarsComponent extends Component {
                           <Avatar>
                             <LocationOnIcon />
                           </Avatar>
-                          <ListItemText primary="Car location" secondary={cars.location} />
+                          <ListItemText primary="Finish location" secondary={cars.location} />
                         </ListItem>
                       </List>
                     </Grid>

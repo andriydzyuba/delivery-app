@@ -7,7 +7,6 @@ import CarsComponent from './components/cars/cars';
 import MenuItem from '@material-ui/core/MenuItem';
 import Grid from "@material-ui/core/Grid";
 import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
 import AppBar from "@material-ui/core/AppBar";
 
 const MainRouter = () => (
@@ -15,13 +14,20 @@ const MainRouter = () => (
     <div>
       <AppBar position="static" color="default">
         <Toolbar>
-          {/*<Typography variant="title" color="inherit" style={{padding: '10px'}}>*/}
-          {/*Delivery App*/}
-          {/*</Typography>*/}
-          <MenuItem><Link style={{textDecoration: 'none', fontSize: '1.2rem', color: 'black', padding: '10px'}} to="/">Create order</Link></MenuItem>
-          <MenuItem><Link style={{textDecoration: 'none', fontSize: '1.2rem', color: 'black', padding: '10px'}} to="/check/:track_code">Check order</Link></MenuItem>
-          <MenuItem><Link style={{textDecoration: 'none', fontSize: '1.2rem', color: 'black', padding: '10px'}} to="/cars">List cars</Link></MenuItem>
-          <MenuItem><Link style={{textDecoration: 'none', fontSize: '1.2rem', color: 'black', padding: '10px'}} to="/orders">List orders</Link></MenuItem>
+          <Grid container spacing={8}>
+            <Grid item xs={6} sm={3} md={2} lg={2}>
+              <MenuItem style={{borderLeft: '1px solid silver', borderRight: '1px solid silver'}}><Link style={{textDecoration: 'none', fontSize: '1.2rem', color: 'black', padding: '10px'}} to="/">Create order</Link></MenuItem>
+            </Grid>
+            <Grid item xs={6} sm={3} md={2} lg={2}>
+              <MenuItem style={{borderLeft: '1px solid silver', borderRight: '1px solid silver'}}><Link style={{textDecoration: 'none', fontSize: '1.2rem', color: 'black', padding: '10px'}} to="/check/:track_code">Check order</Link></MenuItem>
+            </Grid>
+            <Grid item xs={6} sm={3} md={2} lg={2}>
+              <MenuItem style={{borderLeft: '1px solid silver', borderRight: '1px solid silver'}}><Link style={{textDecoration: 'none', fontSize: '1.2rem', color: 'black', padding: '10px'}} to="/cars">List cars</Link></MenuItem>
+            </Grid>
+            <Grid item xs={6} sm={3} md={2} lg={2}>
+              <MenuItem style={{borderLeft: '1px solid silver', borderRight: '1px solid silver'}}><Link style={{textDecoration: 'none', fontSize: '1.2rem', color: 'black', padding: '10px'}} to="/orders">List orders</Link></MenuItem>
+            </Grid>
+          </Grid>
         </Toolbar>
       </AppBar>
       <br/>
