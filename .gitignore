@@ -1,5 +1,8 @@
 .vscode
 node_modules
 dist
+__mocks__
+    fileMock.js
+    styleMock.js
 *.log
 .idea
