@@ -11,6 +11,11 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.ENUM,
       values: ['free', 'busy']
     },
+    special_car: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false
+    },
     available_at: {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW

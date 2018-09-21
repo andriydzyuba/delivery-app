@@ -1,0 +1,207 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Simple Delivery application API for everyone. This API supports a data response in JSON format.\n# Endpoint: \n- /orders (Create new order based on query parameters); \n- /check/:track_code (Return order based on unique identifier (track code)). \n# Authentication\nYou don't need authentication for using the API.\n# Rate limit\nThis API doesn't have any limit to the number of requests.\n# Contact Us\nIf you need help, email us at deliveryservice985@gmail.com.",
+    "version": "1.0.0",
+    "title": "Delivery App API"
+  },
+  "host": "newdeliveryapp.herokuapp.com",
+  "tags": [
+    {
+      "name": "orders",
+      "description": "Create new order"
+    },
+    {
+      "name": "check",
+      "description": "Get order by track code"
+    }
+  ],
+  "paths": {
+    "/api/orders": {
+      "post": {
+        "tags": [
+          "orders"
+        ],
+        "description": "",
+        "operationId": "placeOrder",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Order placed for delivering",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PostOrder"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/GetOrder"
+            }
+          }
+        }
+      }
+    },
+    "/api/check/:track_code": {
+      "get": {
+        "tags": [
+          "check"
+        ],
+        "description": "",
+        "operationId": "getOrderByTrackcode",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "track_code",
+            "in": "path",
+            "description": "The track code that needs to be fetched",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/GetOrder"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "PostOrder": {
+      "type": "object",
+      "properties": {
+        "address_from": {
+          "type": "string"
+        },
+        "point_from": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "default": "Point"
+            },
+            "coordinates": {
+              "type": "array",
+              "items": {
+                "type": "integer"
+              },
+              "minItems": 2,
+              "maxItems": 2
+            }
+          }
+        },
+        "address_to": {
+          "type": "string"
+        },
+        "point_to": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "default": "Point"
+            },
+            "coordinates": {
+              "type": "array",
+              "items": {
+                "type": "integer"
+              },
+              "minItems": 2,
+              "maxItems": 2
+            }
+          }
+        },
+        "contacts": {
+          "type": "string"
+        }
+      }
+    },
+    "GetOrder": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "address_from": {
+          "type": "string"
+        },
+        "point_from": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "default": "Point"
+            },
+            "coordinates": {
+              "type": "array",
+              "items": {
+                "type": "integer"
+              },
+              "minItems": 2,
+              "maxItems": 2
+            }
+          }
+        },
+        "address_to": {
+          "type": "string"
+        },
+        "point_to": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "default": "Point"
+            },
+            "coordinates": {
+              "type": "array",
+              "items": {
+                "type": "integer"
+              },
+              "minItems": 2,
+              "maxItems": 2
+            }
+          }
+        },
+        "contacts": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        },
+        "travel_time": {
+          "type": "integer"
+        },
+        "date_estimated": {
+          "type": "string",
+          "format": "date"
+        },
+        "track_code": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    }
+  }
+}

@@ -7,6 +7,8 @@ function getCheck(req, res){
     }
   }).then((order) => {
     res.json(order);
+  }).catch((err) => {
+    res.send(err);
   });
 };
 

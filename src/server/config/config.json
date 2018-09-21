@@ -1,9 +1,9 @@
 {
   "development": {
-    "username": "qxcilayz",
-    "password": "mxEv35kXyBphHbX386NLlOY9ESlJLLPR",
-    "database": "qxcilayz",
-    "host": "dumbo.db.elephantsql.com",
+    "username": "postgres",
+    "password": "1991",
+    "database": "postgres",
+    "host": "localhost",
     "dialect": "postgres"
   },
   "test": {

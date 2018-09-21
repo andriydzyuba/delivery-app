@@ -4,7 +4,7 @@ import {GoogleMap, withGoogleMap, Marker} from "react-google-maps";
 
 export const RenderMiniMap = compose(
   withProps({
-    googleMapURL: "", //https://maps.googleapis.com/maps/api/js?key=&libraries=geometry,drawing,places
+    googleMapURL: "",
     loadingElement: <div style={{ height: `100%` }} />,
     containerElement: <div style={{ height: `390px`, width: '100%'}} />,
     mapElement: <div style={{ height: `100%` }} />,

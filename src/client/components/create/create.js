@@ -24,8 +24,7 @@ export class Create extends Component {
         address_from: this.props.address_from,
         point_to: { type: 'Point', coordinates: [this.props.lat_to, this.props.lng_to]},
         address_to: this.props.address_to,
-        travel_time: this.props.travel_time,
-        status: 'waiting'
+        travel_time: this.props.travel_time
       };
 
       api().post(`/api/orders`, orders)
@@ -55,7 +54,7 @@ export class Create extends Component {
               validators={['required', 'isEmail']}
               errorMessages={['this field is required', 'email is not valid']}
             />
-            <Button disabled={this.state.button} style={{margin: '20px', width: '95%'}} type="submit" variant="contained" color="primary">Add Order</Button>
+            <Button disabled={this.state.button || this.props.address_from === '' || this.props.address_to === ''} style={{margin: '20px', width: '95%'}} type="submit" variant="contained" color="primary">Add Order</Button>
           </ValidatorForm>
           {this.state.track_code && <div style={{margin: '24px', fontSize: '1.2rem', color: 'dimgray'}}>
             <Paper style={{padding: 16, textAlign: 'center'}}>Track code: { this.state.track_code }</Paper></div>}

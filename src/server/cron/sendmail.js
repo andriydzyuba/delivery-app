@@ -14,8 +14,8 @@ function sendNewMail(user){
     from: 'deliveryservice985@gmail.com',
     to: user.dataValues.contacts,
     subject: 'Notification of successful delivery.',
-    text: 'Your order has been successfully delivered. Date: '
-      + user.dataValues.date_estimated + '. Address: '
+    text: 'Your order has been successfully delivered. \nDate: '
+      + user.dataValues.date_estimated + '. \nAddress: '
       + user.dataValues.address_to + '.'
   };
 

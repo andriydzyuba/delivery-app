@@ -21,7 +21,7 @@ function createOrder(req, res){
     point_to: req.body.point_to,
     contacts: req.body.contacts,
     travel_time: req.body.travel_time,
-    status: req.body.status,
+    status: 'waiting',
     track_code: randomstring.generate({
       length: 10,
       charset: 'alphanumeric',
@@ -29,6 +29,8 @@ function createOrder(req, res){
     })
   }).then((order) => {
     res.send(order);
+  }).catch((err) => {
+    res.send(err);
   });
 };
 

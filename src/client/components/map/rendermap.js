@@ -4,7 +4,7 @@ import {GoogleMap, DirectionsRenderer, Marker, withGoogleMap} from "react-google
 
 export const RenderMap = compose(
   withProps({
-    googleMapURL: "", //https://maps.googleapis.com/maps/api/js?key=&libraries=geometry,drawing,places
+    googleMapURL: "",
     loadingElement: <div style={{ height: `100%` }} />,
     containerElement: <div style={{ height: `796px`, width: '100%'}} />,
     mapElement: <div style={{ height: `100%` }} />,

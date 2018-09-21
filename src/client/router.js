@@ -1,5 +1,6 @@
 import React from 'react';
-import { HashRouter as Router, Route, Link } from "react-router-dom";
+import { HashRouter as Router, Route, NavLink } from "react-router-dom";
+import StartComponent from './components/start';
 import CreateComponent from './components/map/map';
 import ListComponent from './components/orders/orders';
 import CheckComponent from './components/check/check';
@@ -16,22 +17,39 @@ const MainRouter = () => (
         <Toolbar>
           <Grid container spacing={8}>
             <Grid item xs={6} sm={3} md={2} lg={2}>
-              <MenuItem style={{borderLeft: '1px solid silver', borderRight: '1px solid silver'}}><Link style={{textDecoration: 'none', fontSize: '1.2rem', color: 'black', padding: '10px'}} to="/">Create order</Link></MenuItem>
+              <NavLink style={{textDecoration: 'none', display:'block'}} activeStyle={{backgroundColor: 'silver'}} to="/create">
+                <MenuItem style={{fontSize: '1.2rem', color: 'black', borderLeft: '1px solid silver', borderRight: '1px solid silver'}}>
+                  Create order
+                </MenuItem>
+              </NavLink>
             </Grid>
             <Grid item xs={6} sm={3} md={2} lg={2}>
-              <MenuItem style={{borderLeft: '1px solid silver', borderRight: '1px solid silver'}}><Link style={{textDecoration: 'none', fontSize: '1.2rem', color: 'black', padding: '10px'}} to="/check/:track_code">Check order</Link></MenuItem>
+              <NavLink style={{textDecoration: 'none', display:'block'}} activeStyle={{backgroundColor: 'silver'}} to="/check/:track_code">
+                <MenuItem style={{fontSize: '1.2rem', color: 'black', borderLeft: '1px solid silver', borderRight: '1px solid silver'}}>
+                  Check order
+                </MenuItem>
+              </NavLink>
             </Grid>
             <Grid item xs={6} sm={3} md={2} lg={2}>
-              <MenuItem style={{borderLeft: '1px solid silver', borderRight: '1px solid silver'}}><Link style={{textDecoration: 'none', fontSize: '1.2rem', color: 'black', padding: '10px'}} to="/cars">List cars</Link></MenuItem>
+              <NavLink style={{textDecoration: 'none', display:'block'}} activeStyle={{backgroundColor: 'silver'}} to="/cars">
+                <MenuItem style={{fontSize: '1.2rem', color: 'black', borderLeft: '1px solid silver', borderRight: '1px solid silver'}}>
+                  List cars
+                </MenuItem>
+              </NavLink>
             </Grid>
             <Grid item xs={6} sm={3} md={2} lg={2}>
-              <MenuItem style={{borderLeft: '1px solid silver', borderRight: '1px solid silver'}}><Link style={{textDecoration: 'none', fontSize: '1.2rem', color: 'black', padding: '10px'}} to="/orders">List orders</Link></MenuItem>
+              <NavLink style={{textDecoration: 'none', display:'block'}} activeStyle={{backgroundColor: 'silver'}} to="/orders">
+                <MenuItem style={{fontSize: '1.2rem', color: 'black', borderLeft: '1px solid silver', borderRight: '1px solid silver'}}>
+                  List orders
+                </MenuItem>
+              </NavLink>
             </Grid>
           </Grid>
         </Toolbar>
       </AppBar>
       <br/>
-      <Route exact path="/" component={CreateComponent} />
+      <Route exact path="/" component={StartComponent} />
+      <Route path="/create" component={CreateComponent} />
       <Route path="/check/:track_code" component={CheckComponent} />
       <Route path="/cars" component={CarsComponent} />
       <Route path="/orders" component={ListComponent} />

@@ -1,6 +1,6 @@
 import React from "react"
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
-import Geocode from "react-geocode";
+// import Geocode from "react-geocode";
 import { Create } from "../create/create"
 import { RenderMap } from "./rendermap"
 import TextField from "@material-ui/core/TextField";
@@ -101,15 +101,29 @@ class CreateComponent extends React.PureComponent {
     // Geocode.setApiKey('AIzaSyDsPZNXy11aKhMyvS1O_2S4dUSbkgOXOzo'); Key for Google Maps API and Geocoding API
     // Geocode.setApiKey('AIzaSyAAnvKAk5sgTpNw9-0xXlFbYXA5uQlSUo4'); Key for Geocoding API
     // Geocode.setApiKey('AIzaSyAIDeLxxU2MakRH0MHEmXn5mccyGKYIsz4'); Key for Geocoding API (another project)
-    Geocode.fromLatLng(lat, lng).then(
-      response => {
-        const address = response.results[0].formatted_address;
-        this.setState({
-          address_from: address,
-          search_from: address
-        });
-      }
-    );
+    // Geocode.fromLatLng(lat, lng).then(
+    //   response => {
+    //     const address = response.results[0].formatted_address;
+    //     this.setState({
+    //       address_from: address,
+    //       search_from: address
+    //     });
+    //   }
+    // );
+
+    const Geocoder = new google.maps.Geocoder();
+
+      Geocoder.geocode({
+        location: {lat: lat, lng: lng}
+      }, (result, status) => {
+        if (status === 'OK') {
+            const address = result[0].formatted_address;
+            this.setState({
+                address_from: address,
+                search_from: address
+            });
+        }
+    });
 
     this.CheckTimeFrom(lat, lng);
 
@@ -125,15 +139,29 @@ class CreateComponent extends React.PureComponent {
     let lat = event.latLng.lat();
     let lng = event.latLng.lng();
     console.log("B");
-    Geocode.fromLatLng(lat, lng).then(
-      response => {
-        const address = response.results[0].formatted_address;
-        this.setState({
-          address_to: address,
-          search_to: address
-        });
-      }
-    );
+    // Geocode.fromLatLng(lat, lng).then(
+    //   response => {
+    //     const address = response.results[0].formatted_address;
+    //     this.setState({
+    //       address_to: address,
+    //       search_to: address
+    //     });
+    //   }
+    // );
+
+    const Geocoder = new google.maps.Geocoder();
+
+    Geocoder.geocode({
+        location: {lat: lat, lng: lng}
+    }, (result, status) => {
+        if (status === 'OK') {
+            const address = result[0].formatted_address;
+            this.setState({
+                address_to: address,
+                search_to: address
+            });
+        }
+    });
 
     this.CheckTimeTo(lat, lng);
 

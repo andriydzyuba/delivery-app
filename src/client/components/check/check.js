@@ -35,7 +35,10 @@ class CheckComponent extends Component {
     order_param: [],
     showOrder: false,
     track_code: '',
-    directions: null
+    directions: null,
+    button: false,
+    message: false,
+    message_text: 'Order not found. Track code is incorrectly!'
   }
 
   handleChange = event => {
@@ -48,7 +51,18 @@ class CheckComponent extends Component {
     api().get(`/api/check/` + this.state.track_code)
       .then(res => {
         const order = res.data;
-        this.setState({ order });
+        console.log(res.data);
+        if(res.data === null){
+          this.setState({
+            message: true,
+            button: true
+          });
+        } else {
+          this.setState({
+            order: order,
+            button: true
+          });
+        }
       })
       .then (
         this.setState({ showOrder: true })
@@ -75,7 +89,17 @@ class CheckComponent extends Component {
     api().get(`/api/check/` + this.props.match.params.track_code)
       .then(res => {
         const order_param = res.data;
-        this.setState({ order_param });
+        if(res.data === null){
+          this.setState({
+            message: true,
+            button: true
+          });
+        } else {
+          this.setState({
+            order_param: order_param,
+            button: true
+          });
+        }
       })
       .then(() => {
         const DirectionsService = new google.maps.DirectionsService();
@@ -120,13 +144,13 @@ class CheckComponent extends Component {
               />
             </Grid>
             <Grid item xs={4} sm={3} md={2}>
-              <Button style={{margin: '36px 0 12px 10px', width: '75%'}} type="submit" variant="contained" color="primary">Check</Button>
+              <Button disabled={this.state.button} style={{margin: '36px 0 12px 10px', width: '75%'}} type="submit" variant="contained" color="primary">Check</Button>
             </Grid>
           </Grid>
         </ValidatorForm>
         <br/>
-        {this.state.showOrder &&
-          <div>
+        {this.state.showOrder && !this.state.message &&
+        <div>
             <Paper className={classes.root}>
               <Grid container spacing={8}>
                 <Grid item xs={12} md={6}>
@@ -208,7 +232,7 @@ class CheckComponent extends Component {
             </Paper>
           </div>
         }
-        {!this.state.showOrder && this.props.match.params.track_code !== ':track_code' &&
+        {!this.state.showOrder && !this.state.message && this.props.match.params.track_code !== ':track_code' &&
         <div>
           <Paper className={classes.root}>
             <Grid container spacing={0}>
@@ -291,6 +315,7 @@ class CheckComponent extends Component {
           </Paper>
         </div>
         }
+        {this.state.message && <div style={{fontSize: '2rem', textAlign: 'center'}}><Paper style={{padding: '20px', width: '50%', margin: 'auto'}}> {this.state.message_text} </Paper></div> }
       </div>
     )
   }
