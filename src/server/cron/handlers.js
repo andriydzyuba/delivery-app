@@ -130,7 +130,7 @@ function assignOrderToCar(order, time, car){
 
 /*** Nearest Order ***/
 function setNextOrder(orders, car) {
-  const _TIME = 10800;
+  const _WAYTIME = 10800;
   let nextOrder, timeOrder, isSpecialCar;
   let longOrders = [];
   let shortOrders = [];
@@ -138,7 +138,7 @@ function setNextOrder(orders, car) {
   isSpecialCar = car.dataValues.special_car;
 
   orders.forEach(function(order) {
-    if(order.time > _TIME){
+    if(order.time > _WAYTIME){
       longOrders.push(order)
     } else {
       shortOrders.push(order)
@@ -181,52 +181,6 @@ function setNextOrder(orders, car) {
       return assignOrderToCar(nextOrder, timeOrder, car)
     }
   }
-}
-
-/*** Test Nearest Order ***/
-function setTestNextOrder(orders, car) {
-  const _TIME = 10800;
-  let nextOrder, isSpecialCar;
-  let longOrders = [];
-  let shortOrders = [];
-
-  isSpecialCar = car.dataValues.special_car;
-
-  orders.forEach(function(order) {
-    if(order.time > _TIME){
-      longOrders.push(order)
-    } else {
-      shortOrders.push(order)
-    }
-  });
-
-  if (isSpecialCar){
-    if (longOrders.length === 0){
-      shortOrders.sort(function(a,b){
-        return a.time - b.time
-      });
-      nextOrder = shortOrders[0].order;
-    } else {
-      longOrders.sort(function(a,b){
-        return a.time - b.time
-      });
-      nextOrder = longOrders[0].order;
-    }
-  } else {
-    if (shortOrders.length === 0){
-      longOrders.sort(function(a,b){
-        return a.time - b.time
-      });
-      nextOrder = longOrders[0].order;
-    } else {
-      shortOrders.sort(function(a,b){
-        return a.time - b.time
-      });
-      nextOrder = shortOrders[0].order;
-    }
-  }
-
-  return nextOrder
 }
 
 /*** Search Distance To Order ***/
@@ -300,6 +254,52 @@ function updateDeliveries(){
     setDeliveredOrders(),
     assignOrders()
   ])
+}
+
+/*** Test Nearest Order ***/
+function setTestNextOrder(orders, car) {
+  const _WAYTIME = 10800;
+  let nextOrder, isSpecialCar;
+  let longOrders = [];
+  let shortOrders = [];
+
+  isSpecialCar = car.dataValues.special_car;
+
+  orders.forEach(function(order) {
+    if(order.time > _WAYTIME){
+      longOrders.push(order)
+    } else {
+      shortOrders.push(order)
+    }
+  });
+
+  if (isSpecialCar){
+    if (longOrders.length === 0){
+      shortOrders.sort(function(a,b){
+        return a.time - b.time
+      });
+      nextOrder = shortOrders[0].order;
+    } else {
+      longOrders.sort(function(a,b){
+        return a.time - b.time
+      });
+      nextOrder = longOrders[0].order;
+    }
+  } else {
+    if (shortOrders.length === 0){
+      longOrders.sort(function(a,b){
+        return a.time - b.time
+      });
+      nextOrder = longOrders[0].order;
+    } else {
+      shortOrders.sort(function(a,b){
+        return a.time - b.time
+      });
+      nextOrder = shortOrders[0].order;
+    }
+  }
+
+  return nextOrder
 }
 
 module.exports = {

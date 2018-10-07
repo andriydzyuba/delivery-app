@@ -52,14 +52,14 @@ function setOrderEstimateTime(car, time, order){
 
 /*** Nearest Car ***/
 function nearestCar(cars, order) {
-  const _TIME = 10800;
+  const _WAYTIME = 10800;
   let foundCar, timeCar;
   let longCars = [];
   let shortCars = [];
   let specialCar = [];
 
   cars.forEach(function(car) {
-    if(car.time > _TIME){
+    if(car.time > _WAYTIME){
       longCars.push(car)
     } else {
       shortCars.push(car)

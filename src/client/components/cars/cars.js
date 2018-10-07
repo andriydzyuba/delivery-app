@@ -85,7 +85,12 @@ class CarsComponent extends Component {
                           <Avatar>
                             <FormatListNumberedIcon />
                           </Avatar>
-                          <ListItemText primary="№ (id)" secondary={cars.id} />
+                          {cars.special_car === true &&
+                            <ListItemText primary="№ (id)" secondary={cars.id + ' - Long delivery car'} />
+                          }
+                          {cars.special_car === false &&
+                            <ListItemText primary="№ (id)" secondary={cars.id + ' - Short delivery car'} />
+                          }
                         </ListItem>
                         <li>
                           <Divider inset />

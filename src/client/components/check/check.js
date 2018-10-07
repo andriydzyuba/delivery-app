@@ -51,7 +51,6 @@ class CheckComponent extends Component {
     api().get(`/api/check/` + this.state.track_code)
       .then(res => {
         const order = res.data;
-        console.log(res.data);
         if(res.data === null){
           this.setState({
             message: true,
